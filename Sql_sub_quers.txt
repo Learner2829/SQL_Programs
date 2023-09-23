@@ -1,0 +1,188 @@
+create database tb1;
+use tb1;
+
+#174
+create table student ( 
+snum int,
+sname varchar(100),
+major varchar(100),
+level varchar(100),
+age int
+);
+create table class(
+name varchar(100),
+meets_at time,
+room varchar(20),
+fid int
+);
+create table enrolled(
+snum int ,
+cname varchar(100)
+);
+create table faculty(
+fid int,
+fname varchar(100),
+deptid int
+);
+INSERT INTO student (snum, sname, major, level, age)
+VALUES
+  (1, 'John Doe', 'Computer Science', 'Freshman', 18),
+  (2, 'Jane Smith', 'Biology', 'Sophomore', 20),
+  (3, 'Michael Johnson', 'History', 'Junior', 21),
+  (4, 'Emily Williams', 'Mathematics', 'Senior', 22),
+  (5, 'William Brown', 'Physics', 'Sophomore', 19);
+  insert into student value(5,"ashish","computer science","juniors",18);
+  INSERT INTO student (snum, sname, major, level, age)
+VALUES
+  (12, 'Jennifer Lee', 'Electrical Engineering', 'Sophomore', 20),
+  (13, 'Kevin Chen', 'Computer Science', 'Freshman', 19),
+  (14, 'Sophia Kim', 'Mechanical Engineering', 'Junior', 21);
+
+select *from student;
+drop table class;
+INSERT INTO class (name, meets_at, room, fid)
+VALUES
+  ('Math 101', '09:00:00', 'A101', 101),
+  ('English 201', '10:30:00', 'B202', 102),
+  ('History 301', '13:00:00', 'C303', 103),
+  ('Chemistry 201', '14:30:00', 'D404', 104),
+  ('Physics 101', '16:00:00', 'E505', 105);
+  INSERT INTO class (name, meets_at, room, fid)
+VALUES
+  ('Math 101', '09:00:00', 'A101', 101),
+  ('English 201', '10:30:00', 'B202', 102),
+  ('History 301', '13:00:00', 'C303', 103),
+  ('Chemistry 201', '14:30:00', 'D404', 104),
+  ('Physics 101', '16:00:00', 'E505', 105),
+  ('Biology 101', '09:00:00', 'A102', 106),
+  ('Geology 201', '10:30:00', 'B203', 107),
+  ('Computer Science 301', '13:00:00', 'C304', 108),
+  ('Math 201', '14:30:00', 'D405', 109),
+  ('Physics 201', '16:00:00', 'E506', 110),
+  ('Biology 301', '13:00:00', 'C306', 128),
+  ('Computer Science 201', '14:30:00', 'D407', 129),
+  ('Math 301', '16:00:00', 'E508', 130);
+
+  INSERT INTO enrolled (snum, cname)
+VALUES
+  (1, 'Math'),
+  (1, 'English'),
+  (2, 'History'),
+  (3, 'Chemistry'),
+  (4, 'Physics'),
+  (5, 'Math'),
+  (5, 'History');
+  INSERT INTO class (name, meets_at, room, fid)
+VALUES
+  ('Math 101', '09:00:00', 'A101', 101),
+  ('Math 101', '11:00:00', 'A102', 102),
+  ('Math 101', '13:30:00', 'A103', 103),
+  ('Math 101', '14:30:00', 'A104', 104),
+  ('Math 101', '16:00:00', 'A105', 105);
+
+  select *from enrolled;
+  INSERT INTO faculty (fid, fname, deptid)
+VALUES
+  (101, 'John Smith', 1),
+  (102, 'Jane Johnson', 2),
+  (103, 'Michael Williams', 1),
+  (104, 'Emily Davis', 3),
+  (105, 'William Brown', 2);
+#1.find the names of all juniors which in computer sc
+select * from student where major="Computer Science" and level="juniors";
+#2
+select*from student;
+#select * from student where (major="Computer science" and major="History")   (age = (SELECT MAX(age) FROM student)) group by major;
+
+SELECT *
+FROM student
+WHERE major IN ('History', 'Computer Science')
+ORDER BY age DESC
+LIMIT 2;
+#3
+select *from class; 
+SELECT *
+FROM class
+WHERE room = 'B202'
+UNION
+SELECT *
+FROM class
+WHERE name IN (
+  SELECT name
+  FROM class
+  GROUP BY name
+  HAVING COUNT(*) > 4
+);
+#4
+select*from student;
+select*from enrolled;
+drop table enrolled;
+
+select s.snum,s.sname,e.cname
+from student s
+join enrolled e on s.snum = e.snum
+group by s.snum,s.sname
+having count(distinct e.cname)>=2;
+ #----------------------
+ select *from class;
+ select c1.name as class_name_1,c2.name as class_name_2
+ from class c1
+ join  class ;
+ #---------------------------
+ #5
+ select * from faculty f
+ join class c on f.fid=c.fid;
+ #6
+SELECT f.fid, f.fname, COUNT(c.name) AS number_of_lectures
+FROM faculty f
+LEFT JOIN class c ON f.fid = c.fid
+GROUP BY f.fid, f.fname
+having count(c.name)>5;
+#7
+SELECT level, AVG(age) FROM student GROUP BY level;
+#8
+SELECT level, AVG(age) FROM student where level != "junior" GROUP BY level;
+#9
+SELECT f.fname FROM faculty f join class c on f.fid=c.fid where c.room="A101";
+select * from class;
+select *from faculty;
+drop table faculty;
+drop table class;
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
