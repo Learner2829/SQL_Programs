@@ -1,0 +1,157 @@
+create database db1;
+use db1;
+drop table tb1;
+create table tb1(
+name1 varchar(10),id int
+);
+
+DELIMITER //
+CREATE procedure HELLO()
+BEGIN
+declare MESSAGE varchar(100);
+SET MESSAGE="HELLO WORLD";
+select(MESSAGE);
+END
+//
+DELIMITER ;
+CALL HELLO();
+#-----------------------------------------------------------------------------------
+#VARIABLE PROCEDURE
+USE DB1;
+DELIMITER //
+create procedure VARI()
+begin
+declare VAR1 VARCHAR(10);
+declare VAR2 VARCHAR(10);
+SET VAR1 = "HELLO";
+SET VAR2 = "WORLD";
+select (concat(VAR1,VAR2));
+END
+//
+DELIMITER ;
+DROP procedure VARI;
+CALL VARI();
+#-------------------------------------------------------------------------------------
+#IF ELSE CONDITION(AGE DITECTION)
+DELIMITER //
+CREATE PROCEDURE AGE(IN NUM INT)
+BEGIN	
+    IF NUM>18
+		THEN
+		SELECT("YOU ARE ADULT");
+	ELSE
+		SELECT("YOU ARE NOT ADULT");
+	END IF;
+END
+//
+DELIMITER ;
+DROP procedure AGE;
+CALL AGE(20);
+#----------------------------------------------------------------------------------
+#INSERT INTO TABLE
+DELIMITER //
+CREATE PROCEDURE DATA_IN(IN BO INT)
+BEGIN
+	IF BO = 1 THEN
+		INSERT INTO tb1 VALUES ('Ashish', 2);
+        select ("Data insert susscesfully");
+	ELSE
+		INSERT INTO tb1 VALUES (' ', 0);
+	END IF;
+END //
+DELIMITER ;
+drop procedure DATA_IN;
+ CALL DATA_IN(1);
+ CALL DATA_IN(0);
+ select * from tb1;
+ #-------------------------------------------------------------------------------------------------------------------------------
+ #SWICH CASE (CHECK VOWEL)
+DELIMITER //
+CREATE PROCEDURE VOWEL(IN VOWEL VARCHAR(2))
+BEGIN
+    DECLARE out1 VARCHAR(50);
+    
+    CASE
+        WHEN VOWEL = 'A' THEN
+            SET out1 = 'THIS IS A VOWEL';
+        WHEN VOWEL = 'E' THEN
+            SET out1 = 'THIS IS B VOWEL';
+        WHEN VOWEL = 'I' THEN
+            SET out1 = 'THIS IS C VOWEL';
+        WHEN VOWEL = 'O' THEN
+            SET out1 = 'THIS IS O VOWEL';
+        WHEN VOWEL = 'U' THEN
+            SET out1 = 'THIS IS U VOWEL';
+        ELSE
+            SET out1 = 'THIS IS NOT A VOWEL';
+    END CASE;
+
+    SELECT out1;  -- This line is necessary to return the value.
+END
+//
+DELIMITER ;
+CALL VOWEL('O');
+DELIMITER //
+#--------------------------------------------------------------------
+CREATE PROCEDURE GradeClassification(IN score INT)
+BEGIN
+    DECLARE grade VARCHAR(2);
+    
+    CASE
+        WHEN score >= 90 THEN SET grade = 'A';
+        WHEN score >= 80 THEN SET grade = 'B';
+        WHEN score >= 70 THEN SET grade = 'C';
+        WHEN score >= 60 THEN SET grade = 'D';
+        ELSE SET grade = 'F';
+    END CASE;
+    
+    SELECT grade;
+END //
+DELIMITER ;
+call GradeClassification(80);
+
+#---------------------------------------------------------------------------------------
+# while Loop 
+DELIMITER //
+create procedure loopl()
+begin
+declare i int default 1;
+	WHILE i <=10 do
+		select i;
+		set i=i+1;
+	END WHILE;
+END //
+DELIMITER ;
+CALL loopl();
+#do while loop
+DELIMITER //
+CREATE PROCEDURE DO_WHILE()
+BEGIN
+	DECLARE I INT DEFAULT 1;
+    
+    REPEAT
+		SELECT I;
+        SET I=I+1;
+	UNTIL I>5 END REPEAT;
+END //
+DELIMITER ;
+ CALL DO_WHILE();
+#================================================================
+#LOOP
+DELIMITER //
+CREATE PROCEDURE MY_LOOP()
+BEGIN
+	DECLARE X INT;
+    SET X=0;
+    LOOP_LABLE:LOOP
+			SET X=X+1;
+			SELECT X ;
+	IF X=10 THEN
+    LEAVE LOOP_LABLE;
+    END IF;
+    END LOOP;
+END //
+DELIMITER ;
+CALL MY_LOOP();
+
+
