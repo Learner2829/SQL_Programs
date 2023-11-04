@@ -1,0 +1,54 @@
+
+
+
+#8 create table deparmnet_id,dep_name,no_emp,
+
+create table employ4(dep_id int primary key auto_increment ,dep_name varchar(20),no_employ int , everage_salary float);
+alter table employ4 add total_salary float;
+alter table employ4 drop column everage_salary;
+select * from employ4;
+delimiter //
+create procedure avg_salary()
+DELIMITER //
+
+CREATE PROCEDURE avg_salary()
+BEGIN
+    DECLARE in_dep_id INT;
+    DECLARE in_dep_name VARCHAR(10);
+    DECLARE in_dep_nemploy INT;
+    DECLARE in_dep_tsalary INT;
+    DECLARE in_dep_esalary FLOAT;
+    
+    SET in_dep_id = 10;
+
+    WHILE in_dep_id <= 40 DO
+        SELECT no_employ INTO in_dep_nemploy FROM employ4 WHERE dep_id = in_dep_id;
+
+        IF in_dep_nemploy > 0 THEN
+            SELECT dep_name INTO in_dep_name FROM employ4 WHERE dep_id = in_dep_id;
+            SELECT total_salary INTO in_dep_tsalary FROM employ4 WHERE dep_id = in_dep_id;
+            SET in_dep_esalary = in_dep_tsalary / in_dep_nemploy;
+            
+            -- Display results
+            SELECT CONCAT('Department ', in_dep_id, ': ', in_dep_name) AS Department;
+            SELECT CONCAT('Total Employees: ', in_dep_nemploy) AS Total_Employees;
+            SELECT CONCAT('Average Salary: ', in_dep_esalary) AS Average_Salary;
+        ELSE
+            -- Handle the case where there are no employees in the department
+            SELECT CONCAT('Department ', in_dep_id, ': No employees in this department') AS Department;
+        END IF;
+
+        SET in_dep_id = in_dep_id + 10;
+    END WHILE;
+END;
+//
+DELIMITER ;
+delimiter ;
+select * from employ4;
+insert into employ4 value(11,'cs',12,1000000),(20,'it',11,11000000),(30,'nikon',null,null);
+call avg_salary();
+
+# Department
+-- Department 40: No employees in this department
+
+-- ------------------------------------------------------------------------------------------------------ 

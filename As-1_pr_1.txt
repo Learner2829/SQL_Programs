@@ -1,0 +1,19 @@
+use db1;
+show tables;
+#1. maximum department
+create table tb1(did int,dcount int);
+insert into tb1 value(1,15),(2,100),(3,21);
+#create procedure for find max
+delimiter //
+create procedure find_max()
+begin
+declare big int;
+select max(dcount) as find_max into big  from tb1;
+select concat("Max department is:",big);
+end
+//
+delimiter ;
+drop procedure find_max;
+call find_max();
+# concat("Max department is:",big)
+-- Max department is:110

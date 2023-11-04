@@ -1,0 +1,16 @@
+#2 find the maximum of deparatment and +10  and create one other department and which is create by user
+delimiter //
+create procedure create_department()
+begin
+ DECLARE	max_new int;
+ declare max_did int;
+ select max(did)+1 into max_did from tb1;
+ select max(dcount)+10 into max_new from tb1;
+ insert into tb1 value(max_did,max_new);
+ end
+ //
+ delimiter ;
+call create_department();
+select *from tb1;
+# 08:45:50	call create_department()	1 row(s) affected	0.062 sec
+-- ------------------------------------------------------------------------------------------------------ 

@@ -1,0 +1,22 @@
+#3 update  department id and department count
+
+delimiter //
+create procedure update_dep(in dep_id int,in dep_cout int)
+begin
+update tb1
+set dcount=dep_cout,did=dep_id
+where did=4;
+end
+//
+delimiter ;
+drop procedure update_dep;
+call update_dep(5,300);
+select * from tb1;
+
+# did, dcount
+-- 2, 100
+-- 3, 21
+-- 5, 300
+-- 5, 120
+-- 6, 130
+-- ---------------------------------------------------------------------------------

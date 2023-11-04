@@ -1,0 +1,48 @@
+ #5.accept employy name ,b_salary and other filds
+create table employ (
+name varchar(20),
+b_salary float,
+HRA float,
+DA float,
+NET_SALARY float,
+PF float
+);
+delimiter //
+create procedure data_insert(in input_name varchar(20),in input_salary float)
+begin
+
+	declare input_hra float;
+	declare input_da float;
+	declare input_netsalary float;
+    declare input_pf float;
+    set input_hra = (31*input_salary)/100;
+    set input_da =(15*input_salary)/100;
+    set input_netsalary=input_salary+input_hra+input_da;
+    
+    if input_salary<3000 then
+    set input_pf =(5*input_salary)/100;
+    
+    elseif input_salary >=3000 and input_salary<=5000 then
+	set input_pf=(7*input_salary)/100;
+    
+    elseif input_salary >=5000 and input_salary<=8000 then
+    set input_pf=(8*input_salary)/100;
+	
+    else 
+    set input_pf=00;
+    
+    end if;
+    
+    insert into employ values(input_name,input_salary,input_hra,input_da,input_netsalary,input_pf);
+    
+end;
+//
+delimiter ;
+drop procedure data_insert;
+call data_insert('yoges',2000);
+select * from employ;
+
+# name, b_salary, HRA, DA, NET_SALARY, PF, salary_grade
+-- ashish, 200000, 62000, 30000, 292000, , 
+-- akash, 20000, 6200, 3000, 29200, 0, 
+-- yoges, 2000, 620, 300, 2920, 100, 

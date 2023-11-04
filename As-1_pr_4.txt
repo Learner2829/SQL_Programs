@@ -1,0 +1,19 @@
+#4.delete the deparment
+delimiter //
+create procedure del_dep(in dep_id int)
+begin
+delete from tb1
+where did=dep_id;
+end
+//
+delimiter ;
+call del_dep(5);
+select * from tb1;
+
+# did, dcount
+-- 1, 15
+-- 2, 100
+-- 3, 21
+-- 6, 130
+
+-- --------------------------------------------------------------------------------------

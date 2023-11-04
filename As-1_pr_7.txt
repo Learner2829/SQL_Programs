@@ -1,0 +1,21 @@
+#7.
+create table employ3(id int auto_increment primary key, salary float,commission float,bonus float);
+#procedure
+delimiter //
+create procedure bonus_count(in input_salary float , in input_commission float)
+begin
+declare input_bonus float;
+	if input_commission is null then
+	select "Your employ not eligible for bonus";
+	else
+	set input_bonus = (15*input_commission)/100;
+	end if;
+    insert into employ3(salary,commission,bonus)value(input_salary,input_commission,input_bonus);
+end
+//
+delimiter ;
+drop procedure bonus_count;
+call bonus_count(12000,NULL);
+select * from employ3;
+
+-- 'Your employ not eligible for bonus'

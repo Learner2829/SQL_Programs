@@ -1,0 +1,33 @@
+#6. find  the position of employ
+create table employ2(id int, salary int ,grade int);
+drop table employ2;
+insert into employ2 value(1,30000,3),(2,2000,4),(3,400000,2),(4,10000000,1);
+select * from employ2; 
+#procedure
+delimiter //
+create procedure grade(in input_id int)
+begin
+	declare input_grade int;
+    set input_grade = (select grade from employ2 where input_id=id); 
+	case input_grade
+    when 1 then 
+    select  "the employee is Project manager";
+    when 2 then 
+    select "‘the employee is Manager";
+    when 3 then 
+    select "the employee is engineer";
+    when 4 then 
+    select "the employee is junior enginee";
+    else
+    select "Employ grade is not define";
+    end case;
+end;
+//
+delimiter ;
+drop procedure grade;
+call grade(4);
+select * from employ2;
+
+# the employee is Project manager
+-- the employee is Project manager
+-- ------------------------------------------------------------------------------
