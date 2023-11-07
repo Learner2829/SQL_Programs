@@ -1,0 +1,34 @@
+-- 10. Create a procedure that deletes rows from the emp table. 
+-- It should accept 1 parameter, job; 
+-- only delete the employee’s with that job. 
+-- Display how many employees were deleted.
+
+show databases;
+create database db1;
+use db1;
+create table emp(emp_Name varchar(10)
+,id int primary key auto_increment ,
+job varchar(10)
+);
+insert into emp value("Yusuf",1,"manager"),("Ashish",2,"CEO"),("Rohit",3,"HR");
+insert into emp value("Dati",4,"HR");
+insert into emp value("Rohit",3,"HR");
+delete from emp where job="HR";
+select * from emp;
+delimiter //
+create procedure delete_emp(in posi varchar(10))
+begin
+declare cout int;
+set cout=1;
+	while "null"=(select id from emp) do
+		if no_more_rows = 0 then
+		delete from emp where job=posi;
+		set cout=cout+1;
+		end if;
+	end while;
+select count;
+end
+//
+delimiter ;
+drop procedure delete_emp;
+call delete_emp("HR");
